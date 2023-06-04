@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
-#include "MainMenuWidget.generated.h"
+#include "StartMenu_Widget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PINGPONG_API UMainMenuWidget : public UUserWidget
+class PINGPONG_API UStartMenu_Widget : public UUserWidget
 {
 	GENERATED_BODY()
 

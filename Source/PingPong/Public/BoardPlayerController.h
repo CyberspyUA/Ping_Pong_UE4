@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "MainMenuWidget.h"
-#include "WaitingAreaWidget.h"
-#include "PlayersScoreWidget.h"
+#include "StartMenu_Widget.h"
+#include "WaitingArea_Widget.h"
+#include "Score_Widget.h"
 #include "BoardPlayerController.generated.h"
 
 /**
@@ -23,25 +23,25 @@ class PINGPONG_API ABoardPlayerController : public APlayerController
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	void MovePawnLeftRight(float Value);
+	void MovePawnRight(float Value);
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UMainMenuWidget> MainMenuWidgetClass;
+	TSubclassOf<class UStartMenu_Widget> StartMenu_WidgetClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UWaitingAreaWidget> WaitingAreaWidgetClass;
+	TSubclassOf<class UWaitingArea_Widget> WaitingArea_WidgetClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UPlayersScoreWidget> PlayersScoreWidgetClass;
+	TSubclassOf<class UScore_Widget> Score_WidgetClass;
 
 	UPROPERTY(EditAnywhere)
-	class UMainMenuWidget* MainMenuWidget;
+	class UStartMenu_Widget* StartMenu_Widget;
 
 	UPROPERTY(EditAnywhere)
-	class UWaitingAreaWidget* WaitingAreaWidget;
+	class UWaitingArea_Widget* WaitingArea_Widget;
 
 	UPROPERTY(EditAnywhere)
-	class UPlayersScoreWidget* PlayersScoreWidget;
+	class UScore_Widget* Score_Widget;
 
 public:
 	void ShowWaitingArea(FString UIText = FString("Waiting for another player to join..."));

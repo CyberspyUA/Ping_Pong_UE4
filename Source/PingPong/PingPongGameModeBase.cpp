@@ -35,7 +35,17 @@ void APingPongGameModeBase::HandleStartingNewPlayer_Implementation(APlayerContro
 
 			TraceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
 
-			UKismetSystemLibrary::LineTraceMultiForObjects(GetWorld(),Start,Start + Forward * 200.f,TraceObjectTypes,false,TArray<AActor*>(),EDrawDebugTrace::None,OutHits,true);
+			UKismetSystemLibrary::LineTraceMultiForObjects(
+				GetWorld(),
+				Start,
+				Start + Forward * 200.f,
+				TraceObjectTypes,
+				false,
+				TArray<AActor*>(),
+				EDrawDebugTrace::None,
+				OutHits,
+				true
+			);
 
 			for (FHitResult& HitResult : OutHits) {
 				if (HitResult.Actor != nullptr) {

@@ -5,30 +5,30 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
-#include "PlayersScoreWidget.generated.h"
+#include "Score_Widget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PINGPONG_API UPlayersScoreWidget : public UUserWidget
+class PINGPONG_API UScore_Widget : public UUserWidget
 {
 	GENERATED_BODY()
 	
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* ThisPlayerId;
+	class UTextBlock* FirstPlayerId;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* ThisPlayerScore;
+	class UTextBlock* FirstPlayerScore;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* OtherPlayerId;
+	class UTextBlock* SecondPlayerId;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* OtherPlayerScore;
+	class UTextBlock* SecondPlayerScore;
 
 public:
-	FString SThisPlayerId;
+	FString SFirstPlayerId;
 
 	void UpdateScore(FString PlayerId, int NewScore);
 };

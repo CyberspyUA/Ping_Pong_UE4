@@ -8,25 +8,25 @@
 void ABoardPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-	this->InputComponent->BindAxis("MoveLeftRight", this, &ABoardPlayerController::MovePawnLeftRight);
+	this->InputComponent->BindAxis("MoveLeftRight", this, &ABoardPlayerController::MovePawnRight);
 }
 
 void ABoardPlayerController::BeginPlay() {
 	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == FString("StartMenu")) {
-		if (MainMenuWidgetClass && MainMenuWidget == nullptr) {
-			MainMenuWidget = CreateWidget<UMainMenuWidget>(GetWorld(), MainMenuWidgetClass);
+		if (StartMenu_WidgetClass && StartMenu_Widget == nullptr) {
+			StartMenu_Widget = CreateWidget<UStartMenu_Widget>(GetWorld(), StartMenu_WidgetClass);
 		}
 
-		if (WaitingAreaWidgetClass && WaitingAreaWidget == nullptr) {
-			WaitingAreaWidget = CreateWidget<UWaitingAreaWidget>(GetWorld(), WaitingAreaWidgetClass);
+		if (WaitingArea_WidgetClass && WaitingArea_Widget == nullptr) {
+			WaitingArea_Widget = CreateWidget<UWaitingArea_Widget>(GetWorld(), WaitingArea_WidgetClass);
 		}
 
-		if (PlayersScoreWidgetClass && PlayersScoreWidget == nullptr) {
-			PlayersScoreWidget = CreateWidget<UPlayersScoreWidget>(GetWorld(), PlayersScoreWidgetClass);
+		if (Score_WidgetClass && Score_Widget == nullptr) {
+			Score_Widget = CreateWidget<UScore_Widget>(GetWorld(), Score_WidgetClass);
 		}
 
-		if (MainMenuWidget != nullptr) {
-			MainMenuWidget->AddToViewport();
+		if (StartMenu_Widget != nullptr) {
+			StartMenu_Widget->AddToViewport();
 			this->SetShowMouseCursor(true);
 			this->SetInputMode(FInputModeUIOnly());
 		}
@@ -42,8 +42,8 @@ void ABoardPlayerController::BeginPlay() {
 		this->SetShowMouseCursor(false);
 		this->SetInputMode(FInputModeGameOnly());
 
-		if (PlayersScoreWidget != nullptr) {
-			PlayersScoreWidget->AddToViewport();
+		if (Score_Widget != nullptr) {
+			Score_Widget->AddToViewport();
 		}
 	}
 }
@@ -59,8 +59,7 @@ void ABoardPlayerController::OnPossess(APawn* NewPawn) {
 
 		TraceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 
-		UKismetSystemLibrary::BoxTraceMultiForObjects(GetWorld(),Start,Start - Forward * 2000.f,FVector(0.5f, 0.5f, 100.f),FRotator(),
-			TraceObjectTypes,false,TArray<AActor*>(),EDrawDebugTrace::None,OutHits,true);
+		UKismetSystemLibrary::BoxTraceMultiForObjects(GetWorld(),Start,Start - Forward * 2000.f,FVector(0.5f, 0.5f, 100.f),FRotator(),TraceObjectTypes,false,TArray<AActor*>(),EDrawDebugTrace::None,OutHits,true);
 
 		for (FHitResult& HitResult : OutHits) {
 			if (HitResult.Actor != nullptr) {
@@ -75,7 +74,7 @@ void ABoardPlayerController::OnPossess(APawn* NewPawn) {
 	}
 }
 
-void ABoardPlayerController::MovePawnLeftRight(float Value) {
+void ABoardPlayerController::MovePawnRight(float Value) {
 	if (Value != 0.f) {
 		ABoardPawn* ControlledPawn = GetPawn<ABoardPawn>();
 
@@ -86,9 +85,9 @@ void ABoardPlayerController::MovePawnLeftRight(float Value) {
 }
 
 void ABoardPlayerController::ShowWaitingArea(FString UIText) {
-	if(WaitingAreaWidget != nullptr) {
-		WaitingAreaWidget->Text->SetText(FText::FromString(UIText));
-		WaitingAreaWidget->AddToViewport();
+	if(WaitingArea_Widget != nullptr) {
+		WaitingArea_Widget->Text->SetText(FText::FromString(UIText));
+		WaitingArea_Widget->AddToViewport();
 
 		this->SetShowMouseCursor(true);
 		this->SetInputMode(FInputModeUIOnly());

@@ -14,7 +14,7 @@ UPingPongGameInstance::UPingPongGameInstance(const FObjectInitializer& ObjectIni
 
 	OnDestroySessionCompleteDelegate = FOnDestroySessionCompleteDelegate::CreateUObject(this, &UPingPongGameInstance::OnDestroySessionComplete);
 
-	GameSession = FName("PingPong");
+	GameSession = FName("1v1");
 }
 
 bool UPingPongGameInstance::HostSession(TSharedPtr<const FUniqueNetId> UserId, FName SessionName, bool bIsLAN, bool bIsPresence, int32 MaxNumPlayers) {
@@ -44,14 +44,14 @@ bool UPingPongGameInstance::HostSession(TSharedPtr<const FUniqueNetId> UserId, F
 		}
 	}
 	else {
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("No OnlineSubsytem found!"));
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("No OnlineSubsytem found!"));
 	}
 
 	return false;
 }
 
 void UPingPongGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("OnCreateSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("OnCreateSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
 
 	IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get();
 	if (OnlineSub) {
@@ -69,7 +69,7 @@ void UPingPongGameInstance::OnCreateSessionComplete(FName SessionName, bool bWas
 }
 
 void UPingPongGameInstance::OnStartOnlineGameComplete(FName SessionName, bool bWasSuccessful) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("OnStartSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("OnStartSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
 	
 	IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get();
 	if (OnlineSub) {
@@ -80,7 +80,7 @@ void UPingPongGameInstance::OnStartOnlineGameComplete(FName SessionName, bool bW
 	}
 
 	if (bWasSuccessful) {
-		UGameplayStatics::OpenLevel(GetWorld(), "PingPongArena", true, "listen");
+		UGameplayStatics::OpenLevel(GetWorld(), "Arena", true, "listen");
 	}
 }
 
@@ -113,7 +113,7 @@ void UPingPongGameInstance::FindSessions(TSharedPtr<const FUniqueNetId> UserId, 
 }
 
 void UPingPongGameInstance::OnFindSessionsComplete(bool bWasSuccessful) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("OnFindSessionsComplete bSuccess: %d"), bWasSuccessful));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("OnFindSessionsComplete bSuccess: %d"), bWasSuccessful));
 
 	IOnlineSubsystem* const OnlineSub = IOnlineSubsystem::Get();
 	if (OnlineSub) {
@@ -121,11 +121,11 @@ void UPingPongGameInstance::OnFindSessionsComplete(bool bWasSuccessful) {
 		if (Sessions.IsValid()) {
 			Sessions->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteDelegate_Handle);
 
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Num Search Results: %d"), SessionSearch->SearchResults.Num()));
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("Num Search Results: %d"), SessionSearch->SearchResults.Num()));
 
 			if (SessionSearch->SearchResults.Num() > 0) {
 				for (int32 SearchIdx = 0; SearchIdx < SessionSearch->SearchResults.Num(); SearchIdx++) {
-					GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Session Number: %d | SessionName: %s"), SearchIdx + 1, *(SessionSearch->SearchResults[SearchIdx].Session.OwningUserName)));
+					GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("Session Number: %d | SessionName: %s"), SearchIdx + 1, *(SessionSearch->SearchResults[SearchIdx].Session.OwningUserName)));
 				}
 			}
 		}
@@ -148,7 +148,7 @@ bool UPingPongGameInstance::JoinSession(TSharedPtr<const FUniqueNetId> UserId, F
 }
 
 void UPingPongGameInstance::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("OnJoinSessionComplete %s, %d"), *SessionName.ToString(), static_cast<int32>(Result)));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("OnJoinSessionComplete %s, %d"), *SessionName.ToString(), static_cast<int32>(Result)));
 
 	IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get();
 	if (OnlineSub) {
@@ -168,7 +168,7 @@ void UPingPongGameInstance::OnJoinSessionComplete(FName SessionName, EOnJoinSess
 }
 
 void UPingPongGameInstance::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("OnDestroySessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("OnDestroySessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
 
 	IOnlineSubsystem* OnlineSub = IOnlineSubsystem::Get();
 	if (OnlineSub) {

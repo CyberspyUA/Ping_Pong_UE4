@@ -46,7 +46,6 @@ void ABallActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector Direction = GetActorForwardVector();
 
-	//UKismetSystemLibrary::DrawDebugArrow(GetWorld(), GetActorLocation(), GetActorLocation() + GetActorForwardVector(), 5.f, FColor::Red, 5.f, 0.5f);
 
 	FHitResult OutHit;
 	bool res = SetActorLocation(GetActorLocation() + Direction * Speed * DeltaTime, true, &OutHit);
@@ -60,21 +59,17 @@ void ABallActor::OnHit(
 	AGateActor* Gate = Cast<AGateActor>(OtherActor);
 
 	if (Gate != nullptr) {
-		// inform server
 		Gate->ReactToStrike();
 
 		FActorSpawnParameters actorSpawnParameters;
 		actorSpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 		if(BP_Ball != nullptr)
-			GetWorld()->SpawnActor<ABallActor>(BP_Ball, FVector(500.f, 790.f, 120.f), FRotator());
+			GetWorld()->SpawnActor<ABallActor>(BP_Ball, FVector(790.f, 1080.f, 140.f), FRotator());
 
 		this->Destroy();
 	}
 	else {
-		/*if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Colliding!"));*/
-
 		FVector ForwardVec = GetActorForwardVector();
 
 		FVector ProjNorm = UKismetMathLibrary::ProjectVectorOnToVector(ForwardVec, Hit.ImpactNormal);

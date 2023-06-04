@@ -1,27 +1,27 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MainMenuWidget.h"
+#include "StartMenu_Widget.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "PingPongGameInstance.h"
 #include "BoardPlayerController.h"
 
-void UMainMenuWidget::NativeOnInitialized() {
+void UStartMenu_Widget::NativeOnInitialized() {
 	if (StartSessionButton != nullptr) {
-		StartSessionButton->OnClicked.AddDynamic(this, &UMainMenuWidget::Server_StartSession);
+		StartSessionButton->OnClicked.AddDynamic(this, &UStartMenu_Widget::Server_StartSession);
 	}
 
 	if (JoinSessionButton != nullptr) {
-		JoinSessionButton->OnClicked.AddDynamic(this, &UMainMenuWidget::Server_JoinSession);
+		JoinSessionButton->OnClicked.AddDynamic(this, &UStartMenu_Widget::Server_JoinSession);
 	}
 
 	if (ExitGameButton != nullptr) {
-		ExitGameButton->OnClicked.AddDynamic(this, &UMainMenuWidget::ExitGame);
+		ExitGameButton->OnClicked.AddDynamic(this, &UStartMenu_Widget::ExitGame);
 	}
 }
 
-void UMainMenuWidget::Client_StartSession_Implementation() {
+void UStartMenu_Widget::Client_StartSession_Implementation() {
 	this->RemoveFromViewport();
 
 	// add waiting area to viewport
@@ -29,7 +29,7 @@ void UMainMenuWidget::Client_StartSession_Implementation() {
 	PlayerController->ShowWaitingArea();
 }
 
-void UMainMenuWidget::Server_StartSession_Implementation() {
+void UStartMenu_Widget::Server_StartSession_Implementation() {
 	// start session
 	UPingPongGameInstance* PPGameInst = Cast<UPingPongGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	PPGameInst->StartGame();
@@ -37,7 +37,7 @@ void UMainMenuWidget::Server_StartSession_Implementation() {
 	Client_StartSession();
 }
 
-void UMainMenuWidget::Client_JoinSession_Implementation() {
+void UStartMenu_Widget::Client_JoinSession_Implementation() {
 	this->RemoveFromViewport();
 
 	ABoardPlayerController* PlayerController = Cast<ABoardPlayerController>(GetWorld()->GetFirstPlayerController());
@@ -45,7 +45,7 @@ void UMainMenuWidget::Client_JoinSession_Implementation() {
 }
 
 
-void UMainMenuWidget::Server_JoinSession_Implementation() {
+void UStartMenu_Widget::Server_JoinSession_Implementation() {
 	// join session
 
 	UPingPongGameInstance* PPGameInst = Cast<UPingPongGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
@@ -55,6 +55,6 @@ void UMainMenuWidget::Server_JoinSession_Implementation() {
 	// start game
 }
 
-void UMainMenuWidget::ExitGame() {
+void UStartMenu_Widget::ExitGame() {
 	UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
 }

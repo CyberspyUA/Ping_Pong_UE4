@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
-#include "WaitingAreaWidget.generated.h"
+#include "WaitingArea_Widget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PINGPONG_API UWaitingAreaWidget : public UUserWidget
+class PINGPONG_API UWaitingArea_Widget : public UUserWidget
 {
 	GENERATED_BODY()
 
